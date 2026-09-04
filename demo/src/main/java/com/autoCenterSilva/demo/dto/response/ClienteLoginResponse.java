@@ -8,7 +8,7 @@ public record ClienteLoginResponse(String nome,
     public static ClienteLoginResponse de(Cliente cliente){
         return new ClienteLoginResponse(
                 cliente.getNome(),
-                "Login realizado com sucesso!"
+                "Bem vindo: " + cliente.getNome() + "Login realizado com sucesso!"
         );
     }
 }
