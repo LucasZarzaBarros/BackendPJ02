@@ -41,5 +41,21 @@ public class ClientesService {
         return ClienteCreateResponse.de(clienteSalvo);
     }
 
+    @Transactional
+    public ClienteLoginResponse validarLogin(ClienteLoginRequest clienteLoginRequest) {
+        Cliente cliente = this.clientesRepository.findByTelefone(clienteLoginRequest.getTelefone())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Telefone informado está incorreto"));
+        if (!cliente.getStatus()){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Conta desativada");
+        }
+        if (!cliente.getSenha().equals(clienteLoginRequest.getSenha())){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Senha está incorreta");
+        }
+        if (!cliente.getNome().equals(clienteLoginRequest.getNome())){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Nome inserido está incorreto");
+        }
+        return new ClienteLoginResponse(cliente.getNome(),  "Login realizado com sucesso!");
+    }
+
 
 }
