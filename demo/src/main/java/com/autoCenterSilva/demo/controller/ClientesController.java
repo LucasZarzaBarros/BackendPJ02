@@ -28,7 +28,7 @@ public class ClientesController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ClienteCreateResponse> login(@RequestBody ClienteLoginRequest clienteLoginRequest){
+    public ResponseEntity<ClienteLoginResponse> login(@RequestBody ClienteLoginRequest clienteLoginRequest){
         ClienteLoginResponse clienteLogin = this.clientesService.validarLogin(clienteLoginRequest);
         return new ResponseEntity<>(clienteLogin, HttpStatus.OK);
     }
