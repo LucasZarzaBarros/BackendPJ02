@@ -1,15 +1,15 @@
 package com.autoCenterSilva.demo.controller;
 
 import com.autoCenterSilva.demo.dto.request.ProdutoCreateRequest;
+import com.autoCenterSilva.demo.dto.request.ProdutoVariacaoRequest;
+import com.autoCenterSilva.demo.dto.response.ProdutoVariacaoResponse;
 import com.autoCenterSilva.demo.dto.response.ProdutosCreateResponse;
+import com.autoCenterSilva.demo.entity.ProdutoVariacao;
 import com.autoCenterSilva.demo.service.ProdutosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/produtos")
@@ -23,4 +23,12 @@ public class ProdutosController {
         ProdutosCreateResponse response = this.produtosService.salvarProduto(produtoCreateRequest);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
+    @PostMapping("/variacao/{id}")
+    public ResponseEntity<ProdutoVariacaoResponse> salvarProdutoVariacao(@PathVariable Long id, @RequestBody ProdutoVariacaoRequest produtoVariacaoRequest){
+        ProdutoVariacaoResponse response = this.produtosService.salvarVariacao(id, produtoVariacaoRequest);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+
 }
