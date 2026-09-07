@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProdutoVariacaoRequest {
-    private String medidas;
+    private String medida;
     private Double preco;
     private Integer quantidadeEstoque;
 }
