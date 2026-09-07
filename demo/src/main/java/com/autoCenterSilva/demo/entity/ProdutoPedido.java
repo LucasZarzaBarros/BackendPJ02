@@ -1,0 +1,29 @@
+package com.autoCenterSilva.demo.entity;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+@Table(name = "produto_pedido")
+public class ProdutoPedido {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(name = "preco_unitario")
+    private Double precoUnitario;
+
+    @Column(name = "quantidade")
+    private Integer quantidade;
+
+    @ManyToOne
+    @JoinColumn(name = "pedido_id")
+    private Pedido pedido;
+
+    @ManyToOne
+    @JoinColumn(name = "produto_variacao_id")
+    private ProdutoVariacao produtoVariacao;
+}

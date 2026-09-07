@@ -13,8 +13,8 @@ public class ProdutoVariacao {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "medidas")
-    private String medidas;
+    @Column(name = "medida")
+    private String medida;
 
     @Column(name = "preco")
     private Double preco;
