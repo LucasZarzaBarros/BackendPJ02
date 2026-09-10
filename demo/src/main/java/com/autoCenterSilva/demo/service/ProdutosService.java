@@ -31,9 +31,9 @@ public class ProdutosService {
     public ProdutosCreateResponse salvarProduto(ProdutoCreateRequest produtoCreateRequest){
         Produtos produto = new Produtos();
 
-        produto.setNome(produtoCreateRequest.getNome());
-        produto.setDescricao(produtoCreateRequest.getDescricao());
+        produto.setNome("Pneu " + produtoCreateRequest.getMarca() + " " + produtoCreateRequest.getModelo());
         produto.setMarca(produtoCreateRequest.getMarca());
+        produto.setModelo(produtoCreateRequest.getModelo());
         produto.setAtivo(true);
 
         Produtos produtoSalvo = this.produtosRepository.save(produto);
@@ -46,13 +46,16 @@ public class ProdutosService {
         Produtos produtos =  produtosRepository.findById((id))
                 .orElseThrow(()  ->  new RuntimeException("Produto não encontrado"));
         ProdutoVariacao variacao  =  new ProdutoVariacao();
-        variacao.setMedida(produtoVariacaoRequest.getMedidas());
+        variacao.setLargura(produtoVariacaoRequest.getLargura());
+        variacao.setPerfil(produtoVariacaoRequest.getPerfil());
+        variacao.setAro(produtoVariacaoRequest.getAro());
+        variacao.setMedida(produtoVariacaoRequest.getLargura() +"/" + variacao.getPerfil() + "R" +variacao.getAro());
+        variacao.setIndiceCarga(produtoVariacaoRequest.getIndiceCarga());
         variacao.setPreco(produtoVariacaoRequest.getPreco());
         variacao.setQuantidadeEstoque(produtoVariacaoRequest.getQuantidadeEstoque());
         variacao.setProduto(produtos);
         ProdutoVariacao variacaoSalvo = this.produtoVaricaoRepository.save(variacao);
-        return ProdutoVariacaoResponse.de(variacao);
+        return ProdutoVariacaoResponse.de(variacaoSalvo);
     }
-
 
 }

@@ -45,7 +45,7 @@ public class PedidoService {
                     .append(itens.getQuantidade()).append("x ")
                     .append(itens.getProdutoVariacao().getProduto().getNome())
                     .append(" (").append(itens.getProdutoVariacao().getMedida()).append(") - ")
-                    .append("R$ ").append(itens.getPrecoUnitario())
+                    .append("R$ ").append(itens.getProdutoVariacao().getPreco())
                     .append("\n");
         }
         stringBuilder.append("\nValor total: R$ ").append(pedido.getValorTotal());

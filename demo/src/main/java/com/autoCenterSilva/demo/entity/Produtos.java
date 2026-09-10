@@ -19,8 +19,8 @@ public class Produtos {
     @Column(name = "nome")
     private String nome;
 
-    @Column(name = "descricao")
-    private String descricao;
+    @Column(name = "modelo")
+    String modelo;
 
     @Column(name = "marca")
     private String marca;

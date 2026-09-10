@@ -6,7 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProdutoCreateRequest {
-    private String nome;
-    private String descricao;
+    private String modelo;
     private String marca;
 }

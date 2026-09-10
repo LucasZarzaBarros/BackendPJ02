@@ -11,7 +11,7 @@ public record ProdutoVariacaoResponse
                 produtoVariacao.getId(),
                 produtoVariacao.getProduto().getId(),
                 produtoVariacao.getProduto().getNome(),
-                "Produto: " + produtoVariacao.getProduto().getNome() + " adicionado  caracteristicas"
+                "Produto: " + produtoVariacao.getProduto().getNome() + " adicionado  caracteristicas com sucesso!"
         );
     }
 }
