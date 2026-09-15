@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Entity
 @Getter
 @Setter
@@ -29,7 +31,7 @@ public class ProdutoVariacao {
     private String indiceCarga;
 
     @Column(name = "preco")
-    private Double preco;
+    private BigDecimal preco;
 
     @Column(name = "quantidade_estoque")
     private Integer quantidadeEstoque;

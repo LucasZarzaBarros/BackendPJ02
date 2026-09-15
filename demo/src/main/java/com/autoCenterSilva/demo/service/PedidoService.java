@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
@@ -68,7 +69,7 @@ public class PedidoService {
         pedido.setDataPedido(LocalDateTime.now());
 
         List<ProdutoPedido> itens = new ArrayList<>();
-        double total = 0.0;
+        BigDecimal total = BigDecimal.ZERO;
 
         for (ProdutoPedidoRequest produtoPedidoRequest : pedidoCreateRequest.getItens()) {
             ProdutoVariacao variacao = produtoVaricaoRepository.findById(produtoPedidoRequest.getProdutoVariacaoId())
@@ -86,8 +87,7 @@ public class PedidoService {
             produtoPedido.setQuantidade(produtoPedidoRequest.getQuantidade());
             produtoPedido.setPedido(pedido);
 
-            total += variacao.getPreco() * produtoPedido.getQuantidade();
-            itens.add(produtoPedido);
+            total = total.add(variacao.getPreco().multiply(BigDecimal.valueOf(produtoPedido.getQuantidade())));            itens.add(produtoPedido);
             variacao.setQuantidadeEstoque(variacao.getQuantidadeEstoque() - produtoPedido.getQuantidade());
             produtoVaricaoRepository.save(variacao);
         }

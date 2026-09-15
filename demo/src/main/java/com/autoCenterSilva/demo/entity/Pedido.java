@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class Pedido {
     private String status;
 
     @Column(name = "valorTotal")
-    private Double valorTotal;
+    private BigDecimal valorTotal;
 
     @Column(name = "dataPedido")
     private LocalDateTime dataPedido;

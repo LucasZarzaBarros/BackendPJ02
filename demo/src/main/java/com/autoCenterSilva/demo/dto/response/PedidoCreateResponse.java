@@ -2,6 +2,7 @@ package com.autoCenterSilva.demo.dto.response;
 
 import com.autoCenterSilva.demo.entity.Pedido;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -9,7 +10,7 @@ public record PedidoCreateResponse(
         Long id,
         String status,
         LocalDateTime dataPedido,
-        Double valorTotal,
+        BigDecimal valorTotal,
         String nomeCliente,
         List<ProdutoPedidoResponse> itens,
         String linkWhatsapp

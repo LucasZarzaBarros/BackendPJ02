@@ -46,9 +46,9 @@ public class ProdutosService {
         Produtos produtos =  produtosRepository.findById((id))
                 .orElseThrow(()  ->  new RuntimeException("Produto não encontrado"));
         ProdutoVariacao variacao  =  new ProdutoVariacao();
-        variacao.setLargura(produtoVariacaoRequest.getLargura());
-        variacao.setPerfil(produtoVariacaoRequest.getPerfil());
-        variacao.setAro(produtoVariacaoRequest.getAro());
+        //variacao.setLargura(produtoVariacaoRequest.getLargura());
+        //variacao.setPerfil(produtoVariacaoRequest.getPerfil());
+        //variacao.setAro(produtoVariacaoRequest.getAro());
         variacao.setMedida(produtoVariacaoRequest.getLargura() +"/" + variacao.getPerfil() + "R" +variacao.getAro());
         variacao.setIndiceCarga(produtoVariacaoRequest.getIndiceCarga());
         variacao.setPreco(produtoVariacaoRequest.getPreco());

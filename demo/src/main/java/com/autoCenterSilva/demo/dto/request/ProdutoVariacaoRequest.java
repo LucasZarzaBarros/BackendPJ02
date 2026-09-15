@@ -5,6 +5,8 @@ import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 public class ProdutoVariacaoRequest {
@@ -30,7 +32,7 @@ public class ProdutoVariacaoRequest {
 
     @NotNull(message = "Preço é obrigatório")
     @Positive(message = "Preço deve ser positivo")
-    private Double preco;
+    private BigDecimal preco;
 
     @Min(value = 4, message = "Quantidade de estoque minimo é 4")
     private Integer quantidadeEstoque;
