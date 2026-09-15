@@ -1,11 +1,15 @@
 package com.autoCenterSilva.demo.service;
 
 import com.autoCenterSilva.demo.dto.request.ClienteCreatRequest;
+import com.autoCenterSilva.demo.dto.request.ClienteLoginRequest;
 import com.autoCenterSilva.demo.dto.response.ClienteCreateResponse;
+import com.autoCenterSilva.demo.dto.response.ClienteLoginResponse;
 import com.autoCenterSilva.demo.entity.Cliente;
 import com.autoCenterSilva.demo.repository.ClientesRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +43,22 @@ public class ClientesService {
 
         Cliente clienteSalvo = this.clientesRepository.save(cliente);
         return ClienteCreateResponse.de(clienteSalvo);
+    }
+
+    @Transactional
+    public ClienteLoginResponse validarLogin(ClienteLoginRequest clienteLoginRequest) {
+        Cliente cliente = this.clientesRepository.findByTelefone(clienteLoginRequest.getTelefone())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Telefone informado está incorreto"));
+        if (!cliente.getStatus()){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Conta desativada");
+        }
+        if (!cliente.getSenha().equals(clienteLoginRequest.getSenha())){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Senha está incorreta");
+        }
+        if (!cliente.getNome().equals(clienteLoginRequest.getNome())){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Nome inserido está incorreto");
+        }
+        return ClienteLoginResponse.de(cliente);
     }
 
 

@@ -10,24 +10,24 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "cliente")
-public class Cliente {
+@Table(name = "produtos")
+public class Produtos {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "telefone")
-    private String telefone;
-
     @Column(name = "nome")
     private String nome;
 
-    @Column(name = "senha")
-    private String senha;
+    @Column(name = "modelo")
+    String modelo;
 
-    @Column(name = "status")
-    private Boolean status;
+    @Column(name = "marca")
+    private String marca;
 
-    @OneToMany(mappedBy = "cliente")
-    private List<Pedido> pedidos = new ArrayList<>();
+    @Column(name = "ativo")
+    private Boolean ativo;
+
+    @OneToMany(mappedBy = "produto")
+    private List<ProdutoVariacao> variacao = new ArrayList<>();
 }
