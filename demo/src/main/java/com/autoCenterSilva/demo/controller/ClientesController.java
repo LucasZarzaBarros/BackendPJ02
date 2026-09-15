@@ -6,23 +6,22 @@ import com.autoCenterSilva.demo.dto.request.ClienteLoginRequest;
 import com.autoCenterSilva.demo.dto.response.ClienteCreateResponse;
 import com.autoCenterSilva.demo.dto.response.ClienteLoginResponse;
 import com.autoCenterSilva.demo.service.ClientesService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/clientes")
+@CrossOrigin(origins = {"http://localhost:4200", "http://10.212.215.204:4200"})
 public class ClientesController {
 
     @Autowired
     private ClientesService clientesService;
 
     @PostMapping("/criar")
-    public ResponseEntity<ClienteCreateResponse> salvar(@RequestBody ClienteCreatRequest clienteCreatRequest){
+    public ResponseEntity<ClienteCreateResponse> salvar(@Valid @RequestBody ClienteCreatRequest clienteCreatRequest){
         ClienteCreateResponse response = this.clientesService.salvarCliente(clienteCreatRequest);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
