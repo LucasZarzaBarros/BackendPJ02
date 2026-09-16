@@ -5,6 +5,7 @@ import com.autoCenterSilva.demo.dto.request.ClienteLoginRequest;
 import com.autoCenterSilva.demo.dto.response.ClienteCreateResponse;
 import com.autoCenterSilva.demo.dto.response.ClienteLoginResponse;
 import com.autoCenterSilva.demo.entity.Cliente;
+import com.autoCenterSilva.demo.entity.PerfilUsuario;
 import com.autoCenterSilva.demo.repository.ClientesRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,7 @@ public class ClientesService {
         cliente.setNome(clienteCreatRequest.getNome());
         cliente.setTelefone(clienteCreatRequest.getTelefone());
         cliente.setSenha( clienteCreatRequest.getSenha());
-        cliente.setStatus(true);
+        cliente.setPerfil(PerfilUsuario.CLIENTE);
 
         Cliente clienteSalvo = this.clientesRepository.save(cliente);
         return ClienteCreateResponse.de(clienteSalvo);
@@ -49,7 +50,7 @@ public class ClientesService {
     public ClienteLoginResponse validarLogin(ClienteLoginRequest clienteLoginRequest) {
         Cliente cliente = this.clientesRepository.findByTelefone(clienteLoginRequest.getTelefone())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Telefone informado está incorreto"));
-        if (!cliente.getStatus()){
+        if (!cliente.getPerfil().equals(PerfilUsuario.CLIENTE)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Conta desativada");
         }
         if (!cliente.getSenha().equals(clienteLoginRequest.getSenha())){

@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "cliente")
 public class Cliente {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "telefone")
@@ -25,8 +25,8 @@ public class Cliente {
     @Column(name = "senha")
     private String senha;
 
-    @Column(name = "status")
-    private Boolean status;
+    @Enumerated(EnumType.STRING)
+    private PerfilUsuario perfil;
 
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos = new ArrayList<>();

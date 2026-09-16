@@ -12,23 +12,23 @@ import java.math.BigDecimal;
 @Table(name = "produtos_variacao")
 public class ProdutoVariacao {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "medida_completa")
     private String medida;
 
     @Column(name = "largura")
-    private String largura;
+    private Integer largura;
 
     @Column(name = "perfil")
-    private String perfil;
+    private Integer perfil;
 
     @Column(name = "aro")
-    private String aro;
+    private Integer aro;
 
     @Column(name = "indice_carga")
-    private String indiceCarga;
+    private Integer indiceCarga;
 
     @Column(name = "preco")
     private BigDecimal preco;

@@ -21,10 +21,10 @@ public class Pedido {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "valorTotal")
+    @Column(name = "valor_total")
     private BigDecimal valorTotal;
 
-    @Column(name = "dataPedido")
+    @Column(name = "data_pedido")
     private LocalDateTime dataPedido;
 
     @OneToMany(mappedBy = "pedido")
