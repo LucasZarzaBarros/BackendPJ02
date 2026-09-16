@@ -10,7 +10,7 @@ import lombok.Setter;
 @Table(name = "produto_pedido")
 public class ProdutoPedido {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "preco_unitario")

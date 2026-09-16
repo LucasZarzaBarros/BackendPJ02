@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -39,5 +41,8 @@ public class ProdutoVariacao {
     @ManyToOne
     @JoinColumn(name = "produto_id")
     private Produtos produto;
+
+    @ManyToMany(mappedBy = "variacoes")
+    private Set<Carros> carros = new HashSet<>();
 
 }
