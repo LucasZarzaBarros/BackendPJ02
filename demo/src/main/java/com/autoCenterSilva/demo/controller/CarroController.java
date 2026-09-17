@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/carro")
@@ -25,4 +22,11 @@ public class CarroController {
         CarroCreateResponse response = this.carrosService.salvarCarro(carroCreateRequest);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
+    @PostMapping("/{carroId}/variacoes/{produtoVariacaoId}")
+    public ResponseEntity<String> adicionarCarroProdutoVariacao(@PathVariable Long carroId, @PathVariable Long produtoVariacaoId){
+        carrosService.vincularCarroVariacao(carroId, produtoVariacaoId);
+        return ResponseEntity.ok().build();
+    }
+
 }

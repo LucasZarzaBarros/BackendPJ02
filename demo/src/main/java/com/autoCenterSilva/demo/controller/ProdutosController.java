@@ -1,7 +1,9 @@
 package com.autoCenterSilva.demo.controller;
 
+import com.autoCenterSilva.demo.dto.request.MedidaPesquisaRequest;
 import com.autoCenterSilva.demo.dto.request.ProdutoCreateRequest;
 import com.autoCenterSilva.demo.dto.request.ProdutoVariacaoRequest;
+import com.autoCenterSilva.demo.dto.response.ProdutoVariacaoPesquisaResponse;
 import com.autoCenterSilva.demo.dto.response.ProdutoVariacaoResponse;
 import com.autoCenterSilva.demo.dto.response.ProdutosCreateResponse;
 import com.autoCenterSilva.demo.entity.ProdutoVariacao;
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/produtos")
@@ -29,6 +33,11 @@ public class ProdutosController {
     public ResponseEntity<ProdutoVariacaoResponse> salvarProdutoVariacao(@Valid @PathVariable Long id, @RequestBody ProdutoVariacaoRequest produtoVariacaoRequest){
         ProdutoVariacaoResponse response = this.produtosService.salvarVariacao(id, produtoVariacaoRequest);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/pesquisar")
+    public ResponseEntity<List<ProdutoVariacaoPesquisaResponse>> pesquisar(@Valid @RequestBody MedidaPesquisaRequest request) {
+        return ResponseEntity.ok(produtosService.pesquisarPorMedida(request));
     }
 
 

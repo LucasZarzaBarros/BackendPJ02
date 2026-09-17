@@ -1,7 +1,9 @@
 package com.autoCenterSilva.demo.service;
 
+import com.autoCenterSilva.demo.dto.request.MedidaPesquisaRequest;
 import com.autoCenterSilva.demo.dto.request.ProdutoCreateRequest;
 import com.autoCenterSilva.demo.dto.request.ProdutoVariacaoRequest;
+import com.autoCenterSilva.demo.dto.response.ProdutoVariacaoPesquisaResponse;
 import com.autoCenterSilva.demo.dto.response.ProdutoVariacaoResponse;
 import com.autoCenterSilva.demo.dto.response.ProdutosCreateResponse;
 import com.autoCenterSilva.demo.entity.ProdutoVariacao;
@@ -11,6 +13,7 @@ import com.autoCenterSilva.demo.repository.ProdutosRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -60,4 +63,12 @@ public class ProdutosService {
         return ProdutoVariacaoResponse.de(variacaoSalvo);
     }
 
+    @Transactional
+    public List<ProdutoVariacaoPesquisaResponse> pesquisarPorMedida(MedidaPesquisaRequest request) {
+        return produtoVaricaoRepository
+                .findByMedidaContainingIgnoreCase(request.getMedida())
+                .stream()
+                .map(ProdutoVariacaoPesquisaResponse::de)
+                .toList();
+    }
 }

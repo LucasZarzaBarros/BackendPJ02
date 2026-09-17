@@ -1,12 +1,10 @@
 package com.autoCenterSilva.demo.service;
 
+
 import com.autoCenterSilva.demo.dto.request.PedidoCreateRequest;
 import com.autoCenterSilva.demo.dto.request.ProdutoPedidoRequest;
 import com.autoCenterSilva.demo.dto.response.PedidoCreateResponse;
-import com.autoCenterSilva.demo.entity.Cliente;
-import com.autoCenterSilva.demo.entity.Pedido;
-import com.autoCenterSilva.demo.entity.ProdutoPedido;
-import com.autoCenterSilva.demo.entity.ProdutoVariacao;
+import com.autoCenterSilva.demo.entity.*;
 import com.autoCenterSilva.demo.repository.ClientesRepository;
 import com.autoCenterSilva.demo.repository.PedidoRepository;
 import com.autoCenterSilva.demo.repository.ProdutoVaricaoRepository;
@@ -32,13 +30,13 @@ public class PedidoService {
     private ClientesRepository clientesRepository;
     private ProdutoVaricaoRepository produtoVaricaoRepository;
 
-    public PedidoService(PedidoRepository pedidoRepository, ClientesRepository clientesRepository, ProdutoVaricaoRepository produtoVaricaoRepository) {
-        this.pedidoRepository = pedidoRepository;
-        this.clientesRepository = clientesRepository;
+    public PedidoService(ProdutoVaricaoRepository produtoVaricaoRepository, ClientesRepository clientesRepository, PedidoRepository pedidoRepository) {
         this.produtoVaricaoRepository = produtoVaricaoRepository;
+        this.clientesRepository = clientesRepository;
+        this.pedidoRepository = pedidoRepository;
     }
 
-    private String montarMensagemWhats( Pedido  pedido){
+    private String montarMensagemWhats(Pedido  pedido){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append( "Olá! Gostaria de confirmar seu pedido #").append(pedido.getId()).append(":\n\n");
         for (ProdutoPedido itens : pedido.getProdutoPedidos()){
@@ -98,4 +96,5 @@ public class PedidoService {
 
         return PedidoCreateResponse.de(salvo,  linkWats);
     }
+
 }

@@ -4,15 +4,18 @@ import com.autoCenterSilva.demo.dto.request.CarroCreateRequest;
 import com.autoCenterSilva.demo.dto.response.CarroCreateResponse;
 import com.autoCenterSilva.demo.entity.Carros;
 import com.autoCenterSilva.demo.repository.CarrosRepository;
+import com.autoCenterSilva.demo.repository.ProdutoVaricaoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CarrosService {
     private final CarrosRepository  carrosRepository;
+    private final ProdutoVaricaoRepository produtoVaricaoRepository;
 
-    public CarrosService(CarrosRepository carrosRepository) {
+    public CarrosService(CarrosRepository carrosRepository, ProdutoVaricaoRepository produtoVaricaoRepository) {
         this.carrosRepository = carrosRepository;
+        this.produtoVaricaoRepository = produtoVaricaoRepository;
     }
 
     @Transactional
@@ -26,5 +29,13 @@ public class CarrosService {
 
         Carros carroSalvo = this.carrosRepository.save(carros);
         return CarroCreateResponse.de(carroSalvo);
+    }
+
+    @Transactional
+    public void vincularCarroVariacao(Long carroId, Long produtoVariacaoId) {
+        var carro = this.carrosRepository.findById(carroId).orElseThrow();
+        var variacao = this.produtoVaricaoRepository.findById(produtoVariacaoId).orElseThrow();
+
+        carro.getVariacoes().add(variacao);
     }
 }
