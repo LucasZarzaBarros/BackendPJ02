@@ -1,5 +1,5 @@
 ALTER TABLE cliente
-    ADD COLUMN perfil perfil_usuario DEFAULT 'CLIENTE';
+    ADD COLUMN perfil VARCHAR(20) DEFAULT 'CLIENTE';
 
 UPDATE cliente
 SET perfil = 'CLIENTE'

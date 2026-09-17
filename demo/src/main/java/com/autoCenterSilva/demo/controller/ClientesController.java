@@ -1,8 +1,10 @@
 package com.autoCenterSilva.demo.controller;
 
 
+import com.autoCenterSilva.demo.dto.request.ClienteAtualizaRequest;
 import com.autoCenterSilva.demo.dto.request.ClienteCreatRequest;
 import com.autoCenterSilva.demo.dto.request.ClienteLoginRequest;
+import com.autoCenterSilva.demo.dto.response.ClienteAtualizaResponse;
 import com.autoCenterSilva.demo.dto.response.ClienteCreateResponse;
 import com.autoCenterSilva.demo.dto.response.ClienteLoginResponse;
 import com.autoCenterSilva.demo.service.ClientesService;
@@ -30,5 +32,11 @@ public class ClientesController {
     public ResponseEntity<ClienteLoginResponse> login(@Valid @RequestBody ClienteLoginRequest clienteLoginRequest){
         ClienteLoginResponse clienteLogin = this.clientesService.validarLogin(clienteLoginRequest);
         return new ResponseEntity<>(clienteLogin, HttpStatus.OK);
+    }
+
+    @PatchMapping("/atualizar/{id}")
+    public ResponseEntity<ClienteAtualizaResponse> atualizar(@Valid @PathVariable Long id, @RequestBody ClienteAtualizaRequest clienteAtualizRequest){
+        ClienteAtualizaResponse response = this.clientesService.atualizarSenha(id, clienteAtualizRequest);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -1,7 +1,9 @@
 package com.autoCenterSilva.demo.service;
 
+import com.autoCenterSilva.demo.dto.request.ClienteAtualizaRequest;
 import com.autoCenterSilva.demo.dto.request.ClienteCreatRequest;
 import com.autoCenterSilva.demo.dto.request.ClienteLoginRequest;
+import com.autoCenterSilva.demo.dto.response.ClienteAtualizaResponse;
 import com.autoCenterSilva.demo.dto.response.ClienteCreateResponse;
 import com.autoCenterSilva.demo.dto.response.ClienteLoginResponse;
 import com.autoCenterSilva.demo.entity.Cliente;
@@ -38,9 +40,9 @@ public class ClientesService {
         }
         Cliente cliente = new Cliente();
         cliente.setNome(clienteCreatRequest.getNome());
-        cliente.setTelefone(clienteCreatRequest.getTelefone());
-        cliente.setSenha( clienteCreatRequest.getSenha());
         cliente.setPerfil(PerfilUsuario.CLIENTE);
+        cliente.setSenha( clienteCreatRequest.getSenha());
+        cliente.setTelefone(clienteCreatRequest.getTelefone());
 
         Cliente clienteSalvo = this.clientesRepository.save(cliente);
         return ClienteCreateResponse.de(clienteSalvo);
@@ -62,5 +64,16 @@ public class ClientesService {
         return ClienteLoginResponse.de(cliente);
     }
 
+    @Transactional
+    public ClienteAtualizaResponse atualizarSenha(Long id, ClienteAtualizaRequest clienteAtualizaRequest){
+        Cliente cliente = clientesRepository.findById((id)).orElseThrow(()  ->  new RuntimeException("Cliente não encontrado"));
 
+        if (!cliente.getNome().equals(clienteAtualizaRequest.getNome())){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Nome está incorreto");
+        }
+        cliente.setSenha(clienteAtualizaRequest.getSenha());
+
+        Cliente clienteAtualizado = this.clientesRepository.save(cliente);
+        return ClienteAtualizaResponse.de(clienteAtualizado);
+    }
 }

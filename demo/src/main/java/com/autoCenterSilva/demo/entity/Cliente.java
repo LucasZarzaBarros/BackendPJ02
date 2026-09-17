@@ -3,6 +3,8 @@ package com.autoCenterSilva.demo.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,7 @@ public class Cliente {
     private String senha;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "perfil", nullable = false)
     private PerfilUsuario perfil;
 
     @OneToMany(mappedBy = "cliente")
