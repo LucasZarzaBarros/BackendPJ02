@@ -1,4 +1,4 @@
-package com.autoCenterSilva.demo.dto.response;
+package com.autoCenterSilva.demo.dto.response.produto;
 
 import com.autoCenterSilva.demo.entity.ProdutoVariacao;
 

@@ -7,7 +7,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.2.5</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 
 	<groupId>com.autoCenterSilva</groupId>
@@ -22,7 +22,6 @@
 	</properties>
 
 	<dependencies>
-		<!-- Web & Validation -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -32,7 +31,6 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 
-		<!-- JPA & Bancos de Dados -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -48,33 +46,28 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Flyway -->
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
 		</dependency>
 
-		<!-- OpenFeign -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
 
-		<!-- Lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
 
-		<!-- Documentação Swagger -->
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>2.5.0</version>
 		</dependency>
 
-		<!-- Testes -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

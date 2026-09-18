@@ -1,8 +1,6 @@
-package com.autoCenterSilva.demo.dto.response;
+package com.autoCenterSilva.demo.dto.response.produto;
 
 import com.autoCenterSilva.demo.entity.ProdutoPedido;
-
-import java.util.List;
 
 public record ProdutoPedidoResponse(String produtoNome,
                                     String medida,

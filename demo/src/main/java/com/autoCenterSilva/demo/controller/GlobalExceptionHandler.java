@@ -1,6 +1,6 @@
 package com.autoCenterSilva.demo.controller;
 
-import com.autoCenterSilva.demo.dto.response.ErroValidacoesResponse;
+import com.autoCenterSilva.demo.dto.response.validacao.ErroValidacoesResponse;
 import com.autoCenterSilva.demo.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

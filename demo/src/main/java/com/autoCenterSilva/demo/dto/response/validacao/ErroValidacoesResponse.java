@@ -1,4 +1,4 @@
-package com.autoCenterSilva.demo.dto.response;
+package com.autoCenterSilva.demo.dto.response.validacao;
 
 import java.time.LocalDateTime;
 

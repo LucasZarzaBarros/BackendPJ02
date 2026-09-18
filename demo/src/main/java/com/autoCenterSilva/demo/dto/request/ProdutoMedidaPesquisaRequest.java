@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MedidaPesquisaRequest {
+public class ProdutoMedidaPesquisaRequest {
     @NotBlank(message = "A medida é obrigatória")
     private String medida;
 }

@@ -1,5 +1,6 @@
-package com.autoCenterSilva.demo.dto.response;
+package com.autoCenterSilva.demo.dto.response.produto;
 
+import com.autoCenterSilva.demo.dto.response.carro.CarroPesquisaMedidaResponse;
 import com.autoCenterSilva.demo.entity.ProdutoVariacao;
 
 import java.math.BigDecimal;

@@ -1,11 +1,11 @@
 package com.autoCenterSilva.demo.service;
 
-import com.autoCenterSilva.demo.dto.request.MedidaPesquisaRequest;
-import com.autoCenterSilva.demo.dto.request.ProdutoCreateRequest;
-import com.autoCenterSilva.demo.dto.request.ProdutoVariacaoRequest;
-import com.autoCenterSilva.demo.dto.response.ProdutoVariacaoPesquisaResponse;
-import com.autoCenterSilva.demo.dto.response.ProdutoVariacaoResponse;
-import com.autoCenterSilva.demo.dto.response.ProdutosCreateResponse;
+import com.autoCenterSilva.demo.dto.request.ProdutoMedidaPesquisaRequest;
+import com.autoCenterSilva.demo.dto.request.produto.ProdutoCreateRequest;
+import com.autoCenterSilva.demo.dto.request.produto.ProdutoVariacaoRequest;
+import com.autoCenterSilva.demo.dto.response.produto.ProdutoVariacaoPesquisaResponse;
+import com.autoCenterSilva.demo.dto.response.produto.ProdutoVariacaoResponse;
+import com.autoCenterSilva.demo.dto.response.produto.ProdutoCreateResponse;
 import com.autoCenterSilva.demo.entity.ProdutoVariacao;
 import com.autoCenterSilva.demo.entity.Produtos;
 import com.autoCenterSilva.demo.repository.ProdutoVaricaoRepository;
@@ -31,7 +31,7 @@ public class ProdutosService {
     }
 
     @Transactional
-    public ProdutosCreateResponse salvarProduto(ProdutoCreateRequest produtoCreateRequest){
+    public ProdutoCreateResponse salvarProduto(ProdutoCreateRequest produtoCreateRequest){
         Produtos produto = new Produtos();
 
         produto.setNome("Pneu " + produtoCreateRequest.getMarca() + " " + produtoCreateRequest.getModelo());
@@ -40,7 +40,7 @@ public class ProdutosService {
         produto.setAtivo(true);
 
         Produtos produtoSalvo = this.produtosRepository.save(produto);
-        return ProdutosCreateResponse.de(produtoSalvo);
+        return ProdutoCreateResponse.de(produtoSalvo);
 
     }
 
@@ -64,7 +64,7 @@ public class ProdutosService {
     }
 
     @Transactional
-    public List<ProdutoVariacaoPesquisaResponse> pesquisarPorMedida(MedidaPesquisaRequest request) {
+    public List<ProdutoVariacaoPesquisaResponse> pesquisarPorMedida(ProdutoMedidaPesquisaRequest request) {
         return produtoVaricaoRepository
                 .findByMedidaContainingIgnoreCase(request.getMedida())
                 .stream()

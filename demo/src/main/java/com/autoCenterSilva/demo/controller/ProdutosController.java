@@ -1,12 +1,11 @@
 package com.autoCenterSilva.demo.controller;
 
-import com.autoCenterSilva.demo.dto.request.MedidaPesquisaRequest;
-import com.autoCenterSilva.demo.dto.request.ProdutoCreateRequest;
-import com.autoCenterSilva.demo.dto.request.ProdutoVariacaoRequest;
-import com.autoCenterSilva.demo.dto.response.ProdutoVariacaoPesquisaResponse;
-import com.autoCenterSilva.demo.dto.response.ProdutoVariacaoResponse;
-import com.autoCenterSilva.demo.dto.response.ProdutosCreateResponse;
-import com.autoCenterSilva.demo.entity.ProdutoVariacao;
+import com.autoCenterSilva.demo.dto.request.ProdutoMedidaPesquisaRequest;
+import com.autoCenterSilva.demo.dto.request.produto.ProdutoCreateRequest;
+import com.autoCenterSilva.demo.dto.request.produto.ProdutoVariacaoRequest;
+import com.autoCenterSilva.demo.dto.response.produto.ProdutoVariacaoPesquisaResponse;
+import com.autoCenterSilva.demo.dto.response.produto.ProdutoVariacaoResponse;
+import com.autoCenterSilva.demo.dto.response.produto.ProdutoCreateResponse;
 import com.autoCenterSilva.demo.service.ProdutosService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +23,8 @@ public class ProdutosController {
     private ProdutosService produtosService;
 
     @PostMapping("/criar")
-    public ResponseEntity<ProdutosCreateResponse> salvarProduto(@Valid @RequestBody ProdutoCreateRequest produtoCreateRequest){
-        ProdutosCreateResponse response = this.produtosService.salvarProduto(produtoCreateRequest);
+    public ResponseEntity<ProdutoCreateResponse> salvarProduto(@Valid @RequestBody ProdutoCreateRequest produtoCreateRequest){
+        ProdutoCreateResponse response = this.produtosService.salvarProduto(produtoCreateRequest);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -36,7 +35,7 @@ public class ProdutosController {
     }
 
     @PostMapping("/pesquisar")
-    public ResponseEntity<List<ProdutoVariacaoPesquisaResponse>> pesquisar(@Valid @RequestBody MedidaPesquisaRequest request) {
+    public ResponseEntity<List<ProdutoVariacaoPesquisaResponse>> pesquisar(@Valid @RequestBody ProdutoMedidaPesquisaRequest request) {
         return ResponseEntity.ok(produtosService.pesquisarPorMedida(request));
     }
 

@@ -1,5 +1,6 @@
-package com.autoCenterSilva.demo.dto.response;
+package com.autoCenterSilva.demo.dto.response.pedido;
 
+import com.autoCenterSilva.demo.dto.response.produto.ProdutoPedidoResponse;
 import com.autoCenterSilva.demo.entity.Pedido;
 
 import java.math.BigDecimal;

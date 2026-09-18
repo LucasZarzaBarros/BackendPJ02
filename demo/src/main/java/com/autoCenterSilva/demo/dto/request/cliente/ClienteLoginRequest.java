@@ -1,4 +1,4 @@
-package com.autoCenterSilva.demo.dto.request;
+package com.autoCenterSilva.demo.dto.request.cliente;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ClienteCreatRequest {
+public class ClienteLoginRequest {
     @NotBlank(message = "Nome é obrigatório")
     private String nome;
 
@@ -17,8 +17,4 @@ public class ClienteCreatRequest {
     @NotBlank(message = "Senha é obrigatória")
     @Size(min = 6, max = 20, message = "Senha deve ter entre 6 e 20 caracteres")
     private String senha;
-
-    @NotBlank(message = "Confirmação da Senha é obrigatória")
-    @Size(min = 6, max = 20, message = "Senha deve ter entre 6 e 20 caracteres")
-    private String confirmarSenha;
 }

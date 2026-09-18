@@ -1,4 +1,4 @@
-package com.autoCenterSilva.demo.dto.response;
+package com.autoCenterSilva.demo.dto.response.cliente;
 
 import com.autoCenterSilva.demo.entity.Cliente;
 

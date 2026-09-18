@@ -1,6 +1,6 @@
 package com.autoCenterSilva.demo.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
+import com.autoCenterSilva.demo.dto.request.produto.ProdutoPedidoRequest;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;

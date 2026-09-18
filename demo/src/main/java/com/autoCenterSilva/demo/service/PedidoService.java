@@ -2,8 +2,8 @@ package com.autoCenterSilva.demo.service;
 
 
 import com.autoCenterSilva.demo.dto.request.PedidoCreateRequest;
-import com.autoCenterSilva.demo.dto.request.ProdutoPedidoRequest;
-import com.autoCenterSilva.demo.dto.response.PedidoCreateResponse;
+import com.autoCenterSilva.demo.dto.request.produto.ProdutoPedidoRequest;
+import com.autoCenterSilva.demo.dto.response.pedido.PedidoCreateResponse;
 import com.autoCenterSilva.demo.entity.*;
 import com.autoCenterSilva.demo.repository.ClientesRepository;
 import com.autoCenterSilva.demo.repository.PedidoRepository;

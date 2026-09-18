@@ -1,4 +1,4 @@
-package com.autoCenterSilva.demo.dto.request;
+package com.autoCenterSilva.demo.dto.request.carro;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

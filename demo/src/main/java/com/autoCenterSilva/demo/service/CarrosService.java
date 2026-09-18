@@ -1,7 +1,8 @@
 package com.autoCenterSilva.demo.service;
 
-import com.autoCenterSilva.demo.dto.request.CarroCreateRequest;
-import com.autoCenterSilva.demo.dto.response.CarroCreateResponse;
+import com.autoCenterSilva.demo.dto.request.carro.CarroCreateRequest;
+import com.autoCenterSilva.demo.dto.response.carro.CarroBuscaResponse;
+import com.autoCenterSilva.demo.dto.response.carro.CarroCreateResponse;
 import com.autoCenterSilva.demo.entity.Carros;
 import com.autoCenterSilva.demo.exception.ResourceNotFoundException;
 import com.autoCenterSilva.demo.repository.CarrosRepository;
@@ -10,6 +11,8 @@ import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CarrosService {
@@ -39,8 +42,8 @@ public class CarrosService {
     public void vincularCarroVariacao(Long carroId, Long produtoVariacaoId) {
         var carro = this.carrosRepository.findById(carroId).orElseThrow(()-> new ResourceNotFoundException("Carro com ID " + carroId + " não encontrado"));
         var variacao = this.produtoVaricaoRepository.findById(produtoVariacaoId).orElseThrow(()-> new ResourceNotFoundException("Produto com ID " + produtoVariacaoId + " não encontrado"));
-
         carro.getVariacoes().add(variacao);
+        log.info("Carro com o ID {} adicionado com sucesso na variação {}", carro.getId(), variacao.getId());
     }
 
     @Transactional
@@ -49,6 +52,7 @@ public class CarrosService {
         var variacao = this.produtoVaricaoRepository.findById(produtovariacaoId).orElseThrow(()-> new ResourceNotFoundException("Produto com ID " + produtovariacaoId + " não encontrado"));
 
         carro.getVariacoes().remove(variacao);
+        log.info("Carro com o ID {} removido da variacao com o ID {}", carroId, variacao);
     }
 
     @Transactional
@@ -60,5 +64,15 @@ public class CarrosService {
         }
         carrosRepository.deleteById(carroId);
         log.info("Carro com o ID {} excluido com sucesso!",  carroId);
+    }
+
+    @Transactional
+    public List<CarroBuscaResponse> buscarCarros(){
+        log.info("Buscando todos os carros no Banco de Dados!");
+        List<Carros> carro =  this.carrosRepository.findAll();
+
+        return carro.stream()
+                .map(CarroBuscaResponse::de)
+                .toList();
     }
 }
