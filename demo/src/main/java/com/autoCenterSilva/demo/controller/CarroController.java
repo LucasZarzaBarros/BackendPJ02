@@ -29,4 +29,15 @@ public class CarroController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/remover/{carroId}/variacao/{produtoVariacaoId}")
+    public ResponseEntity<String> deletarVinculo(@PathVariable Long carroId,  @PathVariable Long produtoVariacaoId){
+        carrosService.excluirCarroVariacao(carroId, produtoVariacaoId);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/excluir/carro/{carroId}")
+    public ResponseEntity<String> excluirCarro(@PathVariable Long carroId){
+        carrosService.excluirCarro(carroId);
+        return ResponseEntity.noContent().build();
+    }
 }

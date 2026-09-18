@@ -3,15 +3,19 @@ package com.autoCenterSilva.demo.service;
 import com.autoCenterSilva.demo.dto.request.CarroCreateRequest;
 import com.autoCenterSilva.demo.dto.response.CarroCreateResponse;
 import com.autoCenterSilva.demo.entity.Carros;
+import com.autoCenterSilva.demo.exception.ResourceNotFoundException;
 import com.autoCenterSilva.demo.repository.CarrosRepository;
 import com.autoCenterSilva.demo.repository.ProdutoVaricaoRepository;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CarrosService {
     private final CarrosRepository  carrosRepository;
     private final ProdutoVaricaoRepository produtoVaricaoRepository;
+    private static final Logger log = LoggerFactory.getLogger(CarrosService.class);
 
     public CarrosService(CarrosRepository carrosRepository, ProdutoVaricaoRepository produtoVaricaoRepository) {
         this.carrosRepository = carrosRepository;
@@ -22,7 +26,7 @@ public class CarrosService {
     public CarroCreateResponse salvarCarro (CarroCreateRequest carroCreateRequest){
         Carros carros = new Carros();
 
-        carros.setMarca( carroCreateRequest.getMarca() );
+        carros.setMarca( carroCreateRequest.getMarca());
         carros.setModelo( carroCreateRequest.getModelo() );
         carros.setAnoFabricacao(carroCreateRequest.getAnoFabricacao());
         carros.setVersao(carroCreateRequest.getVersaoAutomovel());
@@ -33,9 +37,28 @@ public class CarrosService {
 
     @Transactional
     public void vincularCarroVariacao(Long carroId, Long produtoVariacaoId) {
-        var carro = this.carrosRepository.findById(carroId).orElseThrow();
-        var variacao = this.produtoVaricaoRepository.findById(produtoVariacaoId).orElseThrow();
+        var carro = this.carrosRepository.findById(carroId).orElseThrow(()-> new ResourceNotFoundException("Carro com ID " + carroId + " não encontrado"));
+        var variacao = this.produtoVaricaoRepository.findById(produtoVariacaoId).orElseThrow(()-> new ResourceNotFoundException("Produto com ID " + produtoVariacaoId + " não encontrado"));
 
         carro.getVariacoes().add(variacao);
+    }
+
+    @Transactional
+    public void excluirCarroVariacao(Long carroId, Long produtovariacaoId) {
+        var carro = this.carrosRepository.findById(carroId).orElseThrow(()-> new ResourceNotFoundException("Carro com ID " + carroId + " não encontrado"));
+        var variacao = this.produtoVaricaoRepository.findById(produtovariacaoId).orElseThrow(()-> new ResourceNotFoundException("Produto com ID " + produtovariacaoId + " não encontrado"));
+
+        carro.getVariacoes().remove(variacao);
+    }
+
+    @Transactional
+    public void excluirCarro(Long carroId) {
+        var carro = this.carrosRepository.findById(carroId).orElseThrow(()-> new ResourceNotFoundException("Carro com ID " + carroId + " não encontrado"));
+        boolean existeVariacao = carrosRepository.existsByIdAndVariacoesIsNotEmpty(carroId);
+        if (existeVariacao) {
+            throw new IllegalArgumentException("Carro esta vinculado a um produto! Não é possivel excluir!");
+        }
+        carrosRepository.deleteById(carroId);
+        log.info("Carro com o ID {} excluido com sucesso!",  carroId);
     }
 }
