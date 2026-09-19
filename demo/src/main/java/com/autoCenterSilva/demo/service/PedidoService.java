@@ -4,11 +4,14 @@ package com.autoCenterSilva.demo.service;
 import com.autoCenterSilva.demo.dto.request.PedidoCreateRequest;
 import com.autoCenterSilva.demo.dto.request.produto.ProdutoPedidoRequest;
 import com.autoCenterSilva.demo.dto.response.pedido.PedidoCreateResponse;
+import com.autoCenterSilva.demo.dto.response.pedido.PedidosListagemResponse;
 import com.autoCenterSilva.demo.entity.*;
+import com.autoCenterSilva.demo.exception.ResourceNotFoundException;
 import com.autoCenterSilva.demo.repository.ClientesRepository;
 import com.autoCenterSilva.demo.repository.PedidoRepository;
 import com.autoCenterSilva.demo.repository.ProdutoVaricaoRepository;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+@Slf4j
 @Service
 public class PedidoService {
 
@@ -38,7 +42,7 @@ public class PedidoService {
 
     private String montarMensagemWhats(Pedido  pedido){
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append( "Olá! Gostaria de confirmar seu pedido #").append(pedido.getId()).append(":\n\n");
+        stringBuilder.append( "Olá! Seu pedido Número: #").append(pedido.getId()).append(":\n\n" + " foi confirmado!");
         for (ProdutoPedido itens : pedido.getProdutoPedidos()){
             stringBuilder.append("- ")
                     .append(itens.getQuantidade()).append("x ")
@@ -53,17 +57,17 @@ public class PedidoService {
 
     }
 
-
     @Transactional
     public PedidoCreateResponse salvar(PedidoCreateRequest pedidoCreateRequest) {
         Cliente cliente = clientesRepository.findById(pedidoCreateRequest.getClienteId())
-                .orElseThrow(() -> new RuntimeException(
-                        "Cliente Não encontrado"
-                ));
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente com o ID " + pedidoCreateRequest.getClienteId() + " não encontrado"));
+        if (cliente.getPerfil() == PerfilUsuario.DESATIVADO){
+            throw new IllegalArgumentException("O perfil está desativado! Faça Login para finalizar o processo");
+        }
 
         Pedido pedido = new Pedido();
         pedido.setCliente(cliente);
-        pedido.setStatus("Aguardando_Confirmacao");
+        pedido.setStatus("FINALIZADO");
         pedido.setDataPedido(LocalDateTime.now());
 
         List<ProdutoPedido> itens = new ArrayList<>();
@@ -71,7 +75,7 @@ public class PedidoService {
 
         for (ProdutoPedidoRequest produtoPedidoRequest : pedidoCreateRequest.getItens()) {
             ProdutoVariacao variacao = produtoVaricaoRepository.findById(produtoPedidoRequest.getProdutoVariacaoId())
-                    .orElseThrow(() -> new RuntimeException("Variação não encontrada"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Variação com o ID " + produtoPedidoRequest.getProdutoVariacaoId() + " não encontrado"));
 
             ProdutoPedido produtoPedido = new ProdutoPedido();
             produtoPedido.setProdutoVariacao(variacao);
@@ -82,7 +86,7 @@ public class PedidoService {
                         ". Disponível: " + variacao.getQuantidadeEstoque()
                 );
             }
-            produtoPedido.setQuantidade(produtoPedidoRequest.getQuantidade());
+            produtoPedido.setPrecoUnitario(variacao.getPreco());
             produtoPedido.setPedido(pedido);
 
             total = total.add(variacao.getPreco().multiply(BigDecimal.valueOf(produtoPedido.getQuantidade())));            itens.add(produtoPedido);
@@ -94,7 +98,18 @@ public class PedidoService {
         Pedido salvo = pedidoRepository.save(pedido);
         String linkWats = montarMensagemWhats(salvo);
 
+        log.info("Pedido salvo com sucesso!");
         return PedidoCreateResponse.de(salvo,  linkWats);
+    }
+
+    @Transactional
+    public List<PedidosListagemResponse> buscarPedidos() {
+        log.info("Buscando todos os pedidos");
+
+        return pedidoRepository.findAll().stream()
+                .flatMap(pedido -> pedido.getProdutoPedidos().stream())
+                .map(PedidosListagemResponse::de)
+                .toList();
     }
 
 }

@@ -3,7 +3,6 @@ package com.autoCenterSilva.demo.cotacao;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CotacaoMoedaDTO {
-    // A API externa devolve um objeto JSON chamado "USDBRL"
     @JsonProperty("USDBRL")
     private DadosMoeda USDBRL;
 
@@ -16,7 +15,6 @@ public class CotacaoMoedaDTO {
     }
 
     public static class DadosMoeda {
-        // "bid" é o campo do JSON com o valor atual do Dólar
         @JsonProperty("bid")
         private String bid;
 

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Entity
 @Getter
 @Setter
@@ -13,8 +15,8 @@ public class ProdutoPedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "preco_unitario")
-    private Double precoUnitario;
+    @Column(name = "preco_unitario", nullable = false, precision = 38, scale = 2)
+    private BigDecimal precoUnitario;
 
     @Column(name = "quantidade")
     private Integer quantidade;

@@ -27,7 +27,7 @@ public class Pedido {
     @Column(name = "data_pedido")
     private LocalDateTime dataPedido;
 
-    @OneToMany(mappedBy = "pedido")
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProdutoPedido> produtoPedidos = new ArrayList<>();
 
     @ManyToOne

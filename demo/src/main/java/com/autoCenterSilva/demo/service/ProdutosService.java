@@ -3,19 +3,24 @@ package com.autoCenterSilva.demo.service;
 import com.autoCenterSilva.demo.dto.request.ProdutoMedidaPesquisaRequest;
 import com.autoCenterSilva.demo.dto.request.produto.ProdutoCreateRequest;
 import com.autoCenterSilva.demo.dto.request.produto.ProdutoVariacaoRequest;
+import com.autoCenterSilva.demo.dto.response.produto.ProdutoListagemResponse;
 import com.autoCenterSilva.demo.dto.response.produto.ProdutoVariacaoPesquisaResponse;
 import com.autoCenterSilva.demo.dto.response.produto.ProdutoVariacaoResponse;
 import com.autoCenterSilva.demo.dto.response.produto.ProdutoCreateResponse;
 import com.autoCenterSilva.demo.entity.ProdutoVariacao;
 import com.autoCenterSilva.demo.entity.Produtos;
+import com.autoCenterSilva.demo.exception.ResourceNotFoundException;
 import com.autoCenterSilva.demo.repository.ProdutoVaricaoRepository;
 import com.autoCenterSilva.demo.repository.ProdutosRepository;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class ProdutosService {
     private final ProdutosRepository produtosRepository;
@@ -40,6 +45,7 @@ public class ProdutosService {
         produto.setAtivo(true);
 
         Produtos produtoSalvo = this.produtosRepository.save(produto);
+        log.info("Produto cadastrado com sucesso!");
         return ProdutoCreateResponse.de(produtoSalvo);
 
     }
@@ -60,15 +66,37 @@ public class ProdutosService {
         variacao.setQuantidadeEstoque(produtoVariacaoRequest.getQuantidadeEstoque());
         variacao.setProduto(produtos);
         ProdutoVariacao variacaoSalvo = this.produtoVaricaoRepository.save(variacao);
+        log.info("Variacao cadastrado com sucesso!");
         return ProdutoVariacaoResponse.de(variacaoSalvo);
     }
 
     @Transactional
     public List<ProdutoVariacaoPesquisaResponse> pesquisarPorMedida(ProdutoMedidaPesquisaRequest request) {
+        log.info("Pesquisa realizada com sucesso!");
         return produtoVaricaoRepository
                 .findByMedidaContainingIgnoreCase(request.getMedida())
                 .stream()
                 .map(ProdutoVariacaoPesquisaResponse::de)
                 .toList();
     }
+
+    @Transactional
+    public void excluirVariacaoProduto(Long id){
+        var variacao = this.produtoVaricaoRepository.findById((id)).orElseThrow(() -> new ResourceNotFoundException("Variacao com ID " + id + " não encontrado"));
+        variacao.setProduto(null);
+        produtoVaricaoRepository.save(variacao);
+        log.info("Variacao removida com sucesso! {}", id );
+    }
+
+    @Transactional
+    public List<ProdutoListagemResponse> buscarProdutos(){
+        log.info("Buscando todos os Produtos");
+        List<ProdutoVariacao> produto = this.produtoVaricaoRepository.findAll();
+
+        return produto.stream()
+                .map(ProdutoListagemResponse ::de)
+                .toList();
+
+    }
+
 }

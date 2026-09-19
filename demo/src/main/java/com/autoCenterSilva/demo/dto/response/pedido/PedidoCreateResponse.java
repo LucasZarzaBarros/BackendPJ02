@@ -22,7 +22,7 @@ public record PedidoCreateResponse(
                         item.getProdutoVariacao().getProduto().getNome(),
                         item.getProdutoVariacao().getMedida(),
                         item.getQuantidade(),
-                        item.getPrecoUnitario()
+                        item.getProdutoVariacao().getPreco()
                 ))
                 .toList();
 
