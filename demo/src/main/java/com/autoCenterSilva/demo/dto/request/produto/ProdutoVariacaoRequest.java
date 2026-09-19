@@ -1,0 +1,39 @@
+package com.autoCenterSilva.demo.dto.request.produto;
+
+
+import jakarta.validation.constraints.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.math.BigDecimal;
+
+@Getter
+@Setter
+public class ProdutoVariacaoRequest {
+    @Min(value = 80, message = "Latgura minima é 80")
+    @Max(value = 600, message = "Valor maximo é 600")
+    @NotNull(message = "Largura é obrigatório!")
+    private Integer largura;
+
+    @Min(value = 20, message = "Valor minino é 20")
+    @Max(value = 95, message = "Valor maximo é 95")
+    @NotNull(message = "Perfil é obrigatório!")
+    private Integer perfil;
+
+    @Min(value = 8, message = "Valor minimo é 8")
+    @Max(value = 32, message = "Valor maximo é 32")
+    @NotNull(message = "Aro é obrigatório!")
+    private Integer aro;
+
+    @Min(value = 60, message = "Valor minimo é 60")
+    @Max(value = 120, message = "Valor maximo é 120")
+    @NotBlank(message = "Indice de Carga é obrigatório!")
+    private Integer indiceCarga;
+
+    @NotNull(message = "Preço é obrigatório")
+    @Positive(message = "Preço deve ser positivo")
+    private BigDecimal preco;
+
+    @Min(value = 4, message = "Quantidade de estoque minimo é 4")
+    private Integer quantidadeEstoque;
+}
